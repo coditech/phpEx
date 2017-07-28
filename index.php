@@ -24,11 +24,11 @@ function getTasks($file_db){
 	return $list;
 }
 
-function taskTemplate($id,$text){
+function taskTemplate($id,$text,$done){
 ?>
 	<li class="task">
 		<form method="post">
-			<input type="checkbox" name="done" id="task"/>
+			<input type="checkbox" name="done" id="task" <?php if($done){echo 'checked="checked"';}; ?>/>
 			<input type="text" name="text" value="<?php echo $text?>"/>
 			<input type="hidden" name="id" value="<?php echo $id ?>"/>
 			<input type="hidden" name="action" value="edit"/>
