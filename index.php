@@ -19,8 +19,28 @@ function taskTemplate($id,$text){
 <?php
 }
 
+function route($action,$id,$text,$done){
+	if($action=='edit'){
+		echo "action is edit and id is $id and done is $done";
+	}
+	else if($action == 'delete'){
+		echo "action is delete and id is $id";
+	}
+	else if($action == 'new'){
+		echo "action is new and text is $text";
+	}
+};
+
+if(!empty($_POST)){
+	$action = $_POST['action'];
+	$id = $_POST['id'];
+	$text = $_POST['text'];
+	$done = $_POST['done'];
+	route($action,$id,$text,$done);
+};
+
 ?>
-i<!doctype html>
+<!doctype html>
 <html class="no-js" lang="">
 	<head>
 		<meta charset="utf-8">
@@ -30,9 +50,6 @@ i<!doctype html>
 		<link rel="stylesheet" href="style.css">
 	</head>
 	<body>
-		<?php
-			print_r($_POST)
-		?>
 		<div id="Wrapper">
 			<form method="post">
 				<input type="text" name="text" value=""/>
