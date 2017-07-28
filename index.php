@@ -1,5 +1,14 @@
 <?php
 
+try {
+	$file_db = new PDO('sqlite:sample.sqlite3');
+}catch(PDOException $e) {
+	echo $e->getMessage();
+	die();
+}
+
+$file_db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
 function taskTemplate($id,$text){
 ?>
 	<li class="task">
