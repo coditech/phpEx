@@ -68,15 +68,12 @@ function deleteTask($file_db,$id){
 
 function route($file_db,$action,$id,$text,$done){
 	if($action=='edit'){
-		echo "action is edit and id is $id, done is $done and text is $text";
 		editTask($file_db,$id,$text,$done);
 	}
 	else if($action == 'delete'){
-		echo "action is delete and id is $id";
 		deleteTask($file_db,$id);
 	}
 	else if($action == 'new'){
-		echo "action is new and text is $text";
 		createTask($file_db,$text,false);
 	}
 };
