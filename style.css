@@ -11,3 +11,9 @@ body{
     padding:2em;
     box-shadow: 3px 3px 3px rgba(0,0,0,.2)
 }
+form{
+    display:inline;
+}
+ul,li{
+    list-style:none;
+}
