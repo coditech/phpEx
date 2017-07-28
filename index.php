@@ -50,8 +50,8 @@ function noTasksTemplate(){
 }
 
 function editTask($file_db,$id,$text,$done){
-	$insert = "UPDATE tasks SET text=:text,  done=:done WHERE id = :id";
-	$stmt = $file_db->prepare($insert);
+	$update = "UPDATE tasks SET text=:text,  done=:done WHERE id = :id";
+	$stmt = $file_db->prepare($update);
 	$stmt->bindParam(':text', $text);
 	$stmt->bindParam(':done', $done);
 	$stmt->bindParam(':id', $id);
@@ -59,8 +59,8 @@ function editTask($file_db,$id,$text,$done){
 }
 
 function deleteTask($file_db,$id){
-	$insert = "DELETE FROM tasks WHERE id = :id";
-	$stmt = $file_db->prepare($insert);
+	$delete = "DELETE FROM tasks WHERE id = :id";
+	$stmt = $file_db->prepare($delete);
 	$stmt->bindParam(':id', $id);
 	$stmt->execute();
 }
