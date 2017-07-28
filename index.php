@@ -1,27 +1,9 @@
 <?php
 
 require_once('./TaskManager.php');
+require_once('./Task.php');
 
 $taskManager = new TaskManager;
-
-function taskTemplate($id,$text,$done){
-?>
-	<li class="task">
-		<form method="post">
-			<input type="checkbox" name="done" id="task" <?php if($done){echo 'checked="checked"';}; ?>/>
-			<input type="text" name="text" value="<?php echo $text?>"/>
-			<input type="hidden" name="id" value="<?php echo $id ?>"/>
-			<input type="hidden" name="action" value="edit"/>
-			<input type="submit" name="ok" value="ok">
-		</form>
-		<form method="post">
-			<input type="hidden" name="id" value="<?php echo $id ?>"/>
-			<input type="hidden" name="action" value="delete"/>
-			<input type="submit" name="delete" value="delete">
-		</form>
-	</li>
-<?php
-}
 
 function noTasksTemplate(){
 ?>
@@ -77,7 +59,8 @@ if(!empty($_POST)){
 							$id = $task['id'];
 							$text = $task['text'];
 							$done = $task['done'];
-							taskTemplate($id,$text,$done);
+							$task = new Task($id,$text,$done);
+							$task->render($id,$text,$done);
 						}
 					}
 				?>
