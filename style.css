@@ -19,6 +19,7 @@ ul,li{
 }
 .task{
     border-bottom:1px solid rgba(0,0,0,.1);
+    position:relative;
 }
 .task input[type="text"]{
     border:none;
@@ -45,6 +46,32 @@ ul,li{
     text-decoration:line-through;
 }
 
-.btn{
+.btn::after{
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+}
 
+.btn.btn-ok::after{
+    content: "\f1d8";
+}
+.btn.btn-delete::after{
+    content: "\f00d";
+}
+
+.task .btn{
+    position:absolute;
+    top:0;
+    right:0;
+    opacity:0;
+    transition:all 1s ease-in;
+}
+.task .btn-ok{
+    right: 2em;
+}
+.task:hover .btn, .task:focus .btn{
+    opacity:1;
+    transition:all .5s ease-in;
 }
