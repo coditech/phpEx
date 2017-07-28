@@ -75,3 +75,7 @@ ul,li{
     opacity:1;
     transition:all .5s ease-in;
 }
+
+.task input[type="text"]{
+    width:80%;
+}
