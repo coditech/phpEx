@@ -1,35 +1,12 @@
 <?php
 
-require_once('./TaskManager.php');
-require_once('./Task.php');
+require_once('./TasksController.php');
+$c = new TasksController;
 
-$taskManager = new TaskManager;
-
-function noTasksTemplate(){
-?>
-	<div>no tasks! why not create some?</div>
-<?php
+if($c->routeIfMethodIsPost()){
+	header("Location: http://" . $_SERVER['HTTP_HOST']);
+	exit();
 }
-
-function route($taskManager,$action,$id,$text,$done){
-	if($action=='edit'){
-		$taskManager->edit($id,$text,$done);
-	}
-	else if($action == 'delete'){
-		$taskManager->delete($id);
-	}
-	else if($action == 'new'){
-		$taskManager->create($text,false);
-	}
-};
-
-if(!empty($_POST)){
-	$action = $_POST['action'];
-	$id = $_POST['id'];
-	$text = $_POST['text'];
-	$done = $_POST['done'];
-	route($taskManager,$action,$id,$text,$done);
-};
 
 ?>
 <!doctype html>
@@ -43,28 +20,8 @@ if(!empty($_POST)){
 	</head>
 	<body>
 		<div id="Wrapper">
-			<form method="post">
-				<input type="text" name="text" value=""/>
-				<input type="hidden" name="action" value="new"/>
-				<input type="submit" name="ok" value="ok"/>
-			</form>
-			<ul>
-				<?php
-					$list = $taskManager->get();
-					if(!$list){
-						noTasksTemplate();
-					}
-					else{
-						foreach($list as $task){
-							$id = $task['id'];
-							$text = $task['text'];
-							$done = $task['done'];
-							$task = new Task($id,$text,$done);
-							$task->render($id,$text,$done);
-						}
-					}
-				?>
-			</ul>
+			<?php $c->renderCreateForm();  ?>
+			<?php $c->renderListOrEmpty(); ?>
 		<div>
 	</body>
 </html>
