@@ -2,10 +2,10 @@
 
 function taskTemplate($id,$text){
 ?>
-	<li>
+	<li class="task">
 		<form method="post">
 			<input type="checkbox" name="done" id="task"/>
-			<label for="task"><?php echo $text?></label>
+			<input type="text" name="text" value="<?php echo $text?>"/>
 			<input type="hidden" name="id" value="<?php echo $id ?>"/>
 			<input type="hidden" name="action" value="edit"/>
 			<input type="submit" name="ok" value="ok">
@@ -21,7 +21,7 @@ function taskTemplate($id,$text){
 
 function route($action,$id,$text,$done){
 	if($action=='edit'){
-		echo "action is edit and id is $id and done is $done";
+		echo "action is edit and id is $id, done is $done and text is $text";
 	}
 	else if($action == 'delete'){
 		echo "action is delete and id is $id";
