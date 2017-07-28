@@ -1,28 +1,8 @@
 <?php
 
-try {
-	$file_db = new PDO('sqlite:sample.sqlite3');
-}catch(PDOException $e) {
-	echo $e->getMessage();
-	die();
-}
+require_once('./TaskManager.php');
 
-$file_db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-$file_db->exec("CREATE TABLE IF NOT EXISTS tasks (id INTEGER PRIMARY KEY, text TEXT, done BOOLEAN)");
-
-function createTask($file_db,$text,$done){
-	$insert = "INSERT INTO tasks (text, done) VALUES (:text, :done)";
-	$stmt = $file_db->prepare($insert);
-	$stmt->bindParam(':text', $text);
-	$stmt->bindParam(':done', $done);
-	$stmt->execute();
-}
-
-function getTasks($file_db){
-	$list = $file_db->query('SELECT * FROM tasks');
-	return $list;
-}
+$taskManager = new TaskManager;
 
 function taskTemplate($id,$text,$done){
 ?>
@@ -49,32 +29,15 @@ function noTasksTemplate(){
 <?php
 }
 
-function editTask($file_db,$id,$text,$done){
-	$update = "UPDATE tasks SET text=:text,  done=:done WHERE id = :id";
-	$stmt = $file_db->prepare($update);
-	$stmt->bindParam(':text', $text);
-	$stmt->bindParam(':done', $done);
-	$stmt->bindParam(':id', $id);
-	$stmt->execute();
-}
-
-function deleteTask($file_db,$id){
-	$delete = "DELETE FROM tasks WHERE id = :id";
-	$stmt = $file_db->prepare($delete);
-	$stmt->bindParam(':id', $id);
-	$stmt->execute();
-}
-
-
-function route($file_db,$action,$id,$text,$done){
+function route($taskManager,$action,$id,$text,$done){
 	if($action=='edit'){
-		editTask($file_db,$id,$text,$done);
+		$taskManager->edit($id,$text,$done);
 	}
 	else if($action == 'delete'){
-		deleteTask($file_db,$id);
+		$taskManager->delete($id);
 	}
 	else if($action == 'new'){
-		createTask($file_db,$text,false);
+		$taskManager->create($text,false);
 	}
 };
 
@@ -83,7 +46,7 @@ if(!empty($_POST)){
 	$id = $_POST['id'];
 	$text = $_POST['text'];
 	$done = $_POST['done'];
-	route($file_db,$action,$id,$text,$done);
+	route($taskManager,$action,$id,$text,$done);
 };
 
 ?>
@@ -105,7 +68,7 @@ if(!empty($_POST)){
 			</form>
 			<ul>
 				<?php
-					$list = getTasks($file_db);
+					$list = $taskManager->get();
 					if(!$list){
 						noTasksTemplate();
 					}
