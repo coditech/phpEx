@@ -17,6 +17,34 @@ form{
 ul,li{
     list-style:none;
 }
+.task{
+    border-bottom:1px solid rgba(0,0,0,.1);
+}
 .task input[type="text"]{
     border:none;
+}
+.task input[type="checkbox"]{
+   display:none;
+}
+.task label{
+    display:inline-block;
+    width:1em;
+    height:1em;
+    border:1px solid black;
+}
+
+.task input[type="checkbox"] ~ label:after{
+    content:"";
+}
+
+.task input[type="checkbox"]:checked ~ label:after{
+    content:"✔";
+}
+
+.task input[type="checkbox"]:checked ~ input[type="text"]{
+    text-decoration:line-through;
+}
+
+.btn{
+
 }
