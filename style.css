@@ -1,0 +1,13 @@
+*,*::after,*::before{
+    box-sizing:border-box;
+}
+body{
+    background: #ccc;
+}
+#wrapper{
+    margin: 0 auto;
+    width:960px;
+    background:white;
+    padding:2em;
+    box-shadow: 3px 3px 3px rgba(0,0,0,.2)
+}
