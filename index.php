@@ -58,6 +58,14 @@ function editTask($file_db,$id,$text,$done){
 	$stmt->execute();
 }
 
+function deleteTask($file_db,$id){
+	$insert = "DELETE FROM tasks WHERE id = :id";
+	$stmt = $file_db->prepare($insert);
+	$stmt->bindParam(':id', $id);
+	$stmt->execute();
+}
+
+
 function route($file_db,$action,$id,$text,$done){
 	if($action=='edit'){
 		echo "action is edit and id is $id, done is $done and text is $text";
@@ -65,6 +73,7 @@ function route($file_db,$action,$id,$text,$done){
 	}
 	else if($action == 'delete'){
 		echo "action is delete and id is $id";
+		deleteTask($file_db,$id);
 	}
 	else if($action == 'new'){
 		echo "action is new and text is $text";
