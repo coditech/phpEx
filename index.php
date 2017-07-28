@@ -49,9 +49,19 @@ function noTasksTemplate(){
 <?php
 }
 
+function editTask($file_db,$id,$text,$done){
+	$insert = "UPDATE tasks SET text=:text,  done=:done WHERE id = :id";
+	$stmt = $file_db->prepare($insert);
+	$stmt->bindParam(':text', $text);
+	$stmt->bindParam(':done', $done);
+	$stmt->bindParam(':id', $id);
+	$stmt->execute();
+}
+
 function route($file_db,$action,$id,$text,$done){
 	if($action=='edit'){
 		echo "action is edit and id is $id, done is $done and text is $text";
+		editTask($file_db,$id,$text,$done);
 	}
 	else if($action == 'delete'){
 		echo "action is delete and id is $id";
